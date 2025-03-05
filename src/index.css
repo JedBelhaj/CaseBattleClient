@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: rgb(24 24 27 / var(--tw-bg-opacity, 1));
+}
+
+/* Custom animation setup */
+@layer utilities {
+  @keyframes raindrop {
+    0% {
+      transform: translateY(-10vh); /* Start well above the screen */
+      opacity: 0%;
+    }
+    50%{
+      opacity: 100%;
+    }
+    100% {
+      transform: translateY(140vh); /* End below the screen */
+      opacity: 0%;
+    }
+  }
+
+  /* Utility classes for different animation durations */
+  .animate-raindrop-1 {
+    animation: raindrop 4s infinite linear;
+  }
+  .animate-raindrop-2 {
+    animation: raindrop 6s infinite linear;
+  }
+  .animate-raindrop-3 {
+    animation: raindrop 8s infinite linear;
+  }
+}
