@@ -8,8 +8,14 @@ import RoomNotFound from "./RoomNotFound";
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
   const [roomFound, setRoomFound] = useState(false);
+  const [solo, setSolo] = useState(true);
   const { roomId } = useParams();
   useEffect(() => {
+    if (roomId === "_solo") {
+      setRoomFound(true);
+      return;
+    }
+    setSolo(false);
     socket.emit("room_exist", roomId, (exists) => {
       setRoomFound(exists);
     });
@@ -26,7 +32,7 @@ function App() {
     <div className="bg-zinc-900 min-h-screen w-screen flex ">
       {roomFound ? (
         <>
-          <MainWindow gameStarted={gameStarted} />
+          <MainWindow gameStarted={gameStarted} solo={solo} />
           <SideBar />
         </>
       ) : (

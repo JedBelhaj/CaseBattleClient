@@ -84,6 +84,11 @@ function Home() {
     }
   };
 
+  const playSolo = (e) => {
+    e.preventDefault();
+    navigate("/room/_solo");
+  };
+
   return (
     <div className="w-screen h-screen flex items-center justify-center flex-col text-yellow-500 select-none bg-gradient-to-t from-slate-900 to-zinc-900">
       <RiAccountCircleFill className="absolute top-0 right-0 w-14 h-14 m-4 bg-black/20 p-2 rounded-2xl backdrop-blur-sm hover:scale-110 cursor-pointer z-50 duration-200" />
@@ -115,6 +120,10 @@ function Home() {
             />
             <ButtonPr value={"Join a Room"} action={joinRoom} />
           </div>
+        </div>
+        <div className="flex flex-col items-center justify-center p-1">
+          <p className="text-gray-400">or...</p>
+          <ButtonPr value={"Play Solo"} action={playSolo} />
         </div>
       </div>
 

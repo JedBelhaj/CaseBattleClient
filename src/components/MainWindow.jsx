@@ -3,8 +3,8 @@ import Case from "./Case";
 import { getAllRarities, getCrateRarities } from "./utils";
 import RoomSetup from "./RoomSetup";
 
-function MainWindow({ gameStarted }) {
-  console.log(gameStarted);
+function MainWindow({ gameStarted, solo }) {
+  console.log({ gameStarted, solo });
 
   const [cases, setCases] = useState([]);
   const [currType, setCurrType] = useState("Case");
@@ -69,7 +69,7 @@ function MainWindow({ gameStarted }) {
           <h1>Wallet: 500$</h1>
         </div>
       </div>
-      {gameStarted ? (
+      {gameStarted || solo ? (
         <div className="w-full h-full flex items-center justify-center flex-col gap-2 p-8">
           {/* Choose type */}
           <div className="text-white bg-zinc-800 p-4 rounded-lg">
