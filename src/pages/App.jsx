@@ -6,9 +6,17 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import RoomNotFound from "./RoomNotFound";
 function App() {
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(true);
   const [roomFound, setRoomFound] = useState(false);
   const [solo, setSolo] = useState(true);
+  const [players, setPlayers] = useState([]);
+  useEffect(() => {
+    setPlayers(
+      [...Array(5)].map((_, index) => {
+        return { name: `Player${index}`, casesOpened: 200, profit: -200 };
+      })
+    );
+  }, []);
   const { roomId } = useParams();
   useEffect(() => {
     if (roomId === "_solo") {
@@ -29,11 +37,11 @@ function App() {
     };
   }, [roomId]);
   return (
-    <div className="bg-zinc-900 min-h-screen w-screen flex ">
+    <div className="bg-zinc-900 w-screen h-screen flex ">
       {roomFound ? (
         <>
           <MainWindow gameStarted={gameStarted} solo={solo} />
-          <SideBar />
+          {!solo && <SideBar players={players} />}
         </>
       ) : (
         <RoomNotFound />

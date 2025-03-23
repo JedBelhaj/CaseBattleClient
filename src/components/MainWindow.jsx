@@ -60,7 +60,7 @@ function MainWindow({ gameStarted, solo }) {
         e.persist();
         console.log(e);
       }}
-      className="w-full bg-zinc-900 flex flex-col items-center justify-start p-4 "
+      className="w-full h-screen bg-zinc-900 flex flex-col items-center justify-start p-4 overflow-scroll"
     >
       <div className="bg-yellow-600 w-full h-fit p-3 rounded-3xl flex justify-between items-center">
         <h1 className="font-bold font-mono">Gambalé Gambamé</h1>
@@ -70,7 +70,7 @@ function MainWindow({ gameStarted, solo }) {
         </div>
       </div>
       {gameStarted || solo ? (
-        <div className="w-full h-full flex items-center justify-center flex-col gap-2 p-8">
+        <div className="w-full flex items-center justify-center flex-col gap-2 p-8">
           {/* Choose type */}
           <div className="text-white bg-zinc-800 p-4 rounded-lg">
             <label htmlFor="type">Choose a Type:</label>
@@ -106,7 +106,10 @@ function MainWindow({ gameStarted, solo }) {
             </select>
           </div>
           {/* Display case details */}
-          <Case caseData={sortedCases.find((x) => x.name === chosenCase)} />
+          <Case
+            caseData={sortedCases.find((x) => x.name === chosenCase)}
+            solo={solo}
+          />
         </div>
       ) : (
         <RoomSetup />

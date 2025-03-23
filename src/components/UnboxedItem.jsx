@@ -2,7 +2,7 @@ import Star from "./star.svg?react";
 import { ImCross } from "react-icons/im";
 import { addHexColor } from "./utils";
 import { useState } from "react";
-function UnboxedItem({ item, unbox }) {
+function UnboxedItem({ item, unbox, solo }) {
   /*
   TODO: - add funny messages for each item got
         - make this component look better
@@ -17,7 +17,9 @@ function UnboxedItem({ item, unbox }) {
 
   return (
     <div
-      className={`fixed top-0 h-screen w-full bg-black/10 backdrop-blur-md flex flex-col items-center justify-center animate-[scale] ${
+      className={`h-screen absolute overflow-clip top-0 ${
+        !solo ? "w-9/12" : "w-full"
+      } bg-black/10 backdrop-blur-md flex flex-col items-center justify-center ${
         visibility ? "" : "hidden"
       }`}
     >
@@ -26,7 +28,7 @@ function UnboxedItem({ item, unbox }) {
       </p>
       <ImCross
         onClick={() => setVisibility(false)}
-        className="fill-white/70 absolute z-50 w-12 h-12 top-0 right-48 m-4 cursor-pointer hover:scale-110 transition-all duration-200"
+        className="fill-white/70 absolute z-50 w-12 h-12 top-0 right-0 m-10 cursor-pointer hover:scale-110 transition-all duration-200"
       />
       <Star
         style={{ fill: color }}

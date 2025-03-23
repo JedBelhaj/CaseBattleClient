@@ -9,7 +9,7 @@ import {
 import UnboxedItem from "./UnboxedItem";
 import ItemsOpened from "./ItemsOpened";
 
-function Case(props) {
+function Case({ caseData, solo }) {
   /*
   TODO :- add Skip Animation (DONE)
         - add Unboxing Animation (DONE)
@@ -21,7 +21,6 @@ function Case(props) {
   */
   const timeOutRef = useRef(null);
   const simulationSample = 3000;
-  const { caseData } = props;
   const [rarities, setRarities] = useState([]);
   const [itemsOpen, setItemsOpen] = useState([]);
   const [items, setItems] = useState([]);
@@ -33,26 +32,17 @@ function Case(props) {
   const [rareOpen, setRareOpen] = useState(false);
   const [unbox, setUnbox] = useState(false);
 
-  // unboxed item logic
-  useEffect(() => {
-    if (itemsOpen.length !== 0) {
-      if (open) {
-        setUnbox(false);
-      } else {
-        setUnbox(true);
-      }
-    }
-  }, [open]);
-
   //input handling
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter") {
-        if (!open) {
-          openCaseAnimation();
-        } else {
-          clearTimeout(timeOutRef);
-          cleanUpCaseAnimation();
+        if (!unbox) {
+          if (!open) {
+            openCaseAnimation();
+          } else {
+            clearTimeout(timeOutRef);
+            cleanUpCaseAnimation();
+          }
         }
       }
       if (e.key === "Escape") {
@@ -66,7 +56,7 @@ function Case(props) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [open]);
+  }, [open, unbox]);
 
   //setting items and rarities depending on caseData
   useEffect(() => {
@@ -80,12 +70,14 @@ function Case(props) {
   //executes when cancelling case opening animation
   const cleanUpCaseAnimation = () => {
     // FIXME animation lag
+    // not lagging anymore ig
 
     setOpen(false);
     setRareOpen(false);
     setTranslate(" translate-x-[380rem] duration-[0] ");
     if (timeOutRef.current) {
       clearTimeout(timeOutRef.current);
+      setUnbox(true);
     }
   };
   const openCaseAnimation = () => {
@@ -154,7 +146,7 @@ function Case(props) {
   }
 
   return (
-    <div className="flex justify-center items-center flex-col w-full">
+    <div className="flex justify-center items-center flex-col">
       <div
         className={`
           flex flex-col items-center justify-center transition-all w-full 
@@ -246,7 +238,11 @@ function Case(props) {
         </div>
       </div>
       {unbox && (
-        <UnboxedItem unbox={unbox} item={itemsOpen[itemsOpen.length - 1]} />
+        <UnboxedItem
+          unbox={unbox}
+          item={itemsOpen[itemsOpen.length - 1]}
+          solo={solo}
+        />
       )}
     </div>
   );
