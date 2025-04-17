@@ -12,7 +12,9 @@ function MainWindow({ gameStarted, solo }) {
 
   // Fetch cases on mount
   useEffect(() => {
-    fetch("https://bymykel.github.io/CSGO-API/api/en/crates.json")
+    fetch(
+      "https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/crates.json"
+    )
       .then((res) => res.json())
       .then((data) => {
         setCases(

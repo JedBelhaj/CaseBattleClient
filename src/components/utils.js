@@ -53,7 +53,7 @@ export const getRequest = async (url, body) => {
 };
 
 const getCases = await fetch(
-  "https://bymykel.github.io/CSGO-API/api/en/crates.json"
+  "https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/crates.json"
 )
   .then((res) => res.json())
   .then((data) =>
@@ -79,7 +79,7 @@ export function addHexColor(c1, c2) {
 }
 
 export const cachedSkinData = await fetch(
-  "https://bymykel.github.io/CSGO-API/api/en/skins.json"
+  "https://raw.githubusercontent.com/ByMykel/CSGO-API/main/public/api/en/skins.json"
 ).then((res) => res.json());
 
 function getSkinData(skinID) {
