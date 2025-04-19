@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import RainDropSkin from "../components/RainDropSkin";
 import RainDropEffect from "../components/RainDropEffect";
 import ButtonPr from "../components/ButtonPr";
-import socket from "./socket";
+import socket from "../services/socket";
 
 function Home() {
   const [skins, setSkins] = useState([]);
