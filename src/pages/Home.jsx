@@ -46,9 +46,12 @@ function Home() {
   const createRoom = (e) => {
     e.preventDefault();
     const usernameValue = usernameRef.current.value.trim();
+    console.log(usernameValue, " is creating a room");
 
     if (usernameValue.length >= 3) {
       console.log("creating room...");
+      console.log(socket);
+
       socket.emit("create_room", usernameValue);
     } else {
       setWarning(messages.shortUsername);
@@ -164,6 +167,7 @@ function Home() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-center p-1">
+          <p className="text-red-700">{warning}</p>
           <p className="text-gray-400">or...</p>
           <ButtonPr value={"Play Solo"} action={playSolo} />
         </div>

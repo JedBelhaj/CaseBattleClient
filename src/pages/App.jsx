@@ -25,14 +25,16 @@ function App() {
     }
     setSolo(false);
 
+    socket.emit("room_exist", roomId, (exists) => {
+      setRoomFound(exists);
+    });
+
     socket.on("update_users", (updatedPlayers) => {
       setPlayers(updatedPlayers);
       console.log("Updated Players: ", updatedPlayers);
     });
 
-    socket.emit("room_exist", roomId, (exists) => {
-      setRoomFound(exists);
-    });
+    socket.emit("req_update_users", roomId);
 
     return () => {
       socket.off("update_users");
