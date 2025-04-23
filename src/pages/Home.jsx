@@ -16,6 +16,26 @@ function Home() {
   const usernameRef = useRef(null);
   const roomIdRef = useRef(null);
 
+  useEffect(() => {
+    socket.on("error", (message) => {
+      setWarning(message);
+    });
+
+    socket.on("room_created", (roomId) => {
+      console.log(`Room successfully created: ${roomId}`);
+
+      navigate(`/room/${roomId}`);
+    });
+    socket.on("room_found", () => {
+      navigate(`/room/${roomIdRef.current.value.trim().toUpperCase()}`);
+    });
+    return () => {
+      socket.off("error");
+      socket.off("room_created");
+      socket.off("room_found");
+    };
+  });
+
   const getValues = () => {
     setUsername(usernameRef.current.value);
     setRoomID(roomIdRef.current.value);
@@ -43,14 +63,18 @@ function Home() {
       .catch((err) => console.error("Failed to fetch skins:", err));
   }, []);
 
+  const saveUsername = (usr) => {
+    localStorage.setItem("username", usr);
+  };
+
   const createRoom = (e) => {
     e.preventDefault();
     const usernameValue = usernameRef.current.value.trim();
+    saveUsername(usernameValue);
     console.log(usernameValue, " is creating a room");
 
     if (usernameValue.length >= 3) {
       console.log("creating room...");
-      console.log(socket);
 
       socket.emit("create_room", usernameValue);
     } else {
@@ -58,33 +82,16 @@ function Home() {
     }
   };
 
-  socket.on("error", (message) => {
-    setWarning(message);
-  });
-
-  socket.on("room_created", (roomId) => {
-    console.log(`Room successfully created: ${roomId}`);
-
-    navigate(`/room/${roomId}`);
-  });
-
   const joinRoom = (e) => {
     e.preventDefault();
     const usernameValue = usernameRef.current.value.trim();
+    saveUsername(usernameValue);
     const roomIDValue = roomIdRef.current.value.trim().toUpperCase();
 
     if (usernameValue.length >= 3 && roomIDValue.length === 4) {
       socket.emit("join_room", {
         username: usernameValue,
         roomId: roomIDValue,
-      });
-
-      socket.on("room_found", () => {
-        navigate(`/room/${roomIDValue}`);
-      });
-
-      socket.on("error", (message) => {
-        setWarning(message);
       });
     } else {
       setWarning(messages.invalidRoomID);
@@ -147,6 +154,7 @@ function Home() {
             <p className="">Username:</p>
             <input
               placeholder="ShadawStyleSmpl"
+              defaultValue={localStorage.getItem("username")}
               type="text"
               maxLength={14}
               ref={usernameRef}

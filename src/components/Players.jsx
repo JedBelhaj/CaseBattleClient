@@ -1,9 +1,38 @@
 import { IoIosArrowDown } from "react-icons/io";
 import Player from "./Player";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Players({ players }) {
   const [expand, setExpand] = useState(true);
+  const [sortedPlayers, setSortedPlayers] = useState([]);
+
+  useEffect(() => {
+    const sorted = players.sort((a, b) => {
+      if (a.activity) {
+        if (b.activity) {
+          return 0;
+        }
+        return -1;
+      }
+      if (b.activity) {
+        return 1;
+      }
+      return 0;
+    });
+
+    const myIndex = sorted.findIndex(
+      (a) => a.name === localStorage.getItem("username")
+    );
+    console.log("I am", localStorage.getItem("username"));
+
+    if (myIndex != -1) {
+      const aux = sorted[0];
+      sorted[0] = sorted[myIndex];
+      sorted[myIndex] = aux;
+    }
+
+    setSortedPlayers(sorted);
+  }, [players]);
   return (
     <div
       className={`${
@@ -27,8 +56,8 @@ function Players({ players }) {
           expand ? "flex-1 h-fit" : "flex-grow-0 h-0"
         } `}
       >
-        {players.map((p, index) => (
-          <Player player={p} key={index} />
+        {sortedPlayers.map((p, index) => (
+          <Player me={index == 0} player={p} key={index} />
         ))}
       </div>
     </div>

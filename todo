@@ -1,0 +1,6 @@
+plan: 
+    in the server we'll have
+    users = [
+        [username, socketid]
+        ...
+    ]

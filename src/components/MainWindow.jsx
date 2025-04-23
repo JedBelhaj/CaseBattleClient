@@ -2,9 +2,13 @@ import { useEffect, useState, useMemo } from "react";
 import Case from "./Case";
 import { getAllRarities, getCrateRarities } from "./utils";
 import RoomSetup from "./RoomSetup";
+import { GoHomeFill } from "react-icons/go";
+import { useNavigate } from "react-router";
 
 function MainWindow({ gameStarted, solo }) {
   console.log({ gameStarted, solo });
+
+  const navigate = useNavigate();
 
   const [cases, setCases] = useState([]);
   const [currType, setCurrType] = useState("Case");
@@ -65,7 +69,15 @@ function MainWindow({ gameStarted, solo }) {
       className="w-full h-screen bg-zinc-900 flex flex-col items-center justify-start p-4 overflow-scroll"
     >
       <div className="bg-yellow-600 w-full h-fit p-3 rounded-3xl flex justify-between items-center">
-        <h1 className="font-bold font-mono">Gambalé Gambamé</h1>
+        <p
+          className="text-3xl ml-4 hover:scale-110 transition-transform duration-300 cursor-pointer"
+          onClick={() => {
+            navigate("/");
+            socket.emit("leave_room");
+          }}
+        >
+          <GoHomeFill />
+        </p>
         <div className="flex items-center justify-center flex-col">
           <h1>Profit: +100$</h1>
           <h1>Wallet: 500$</h1>
