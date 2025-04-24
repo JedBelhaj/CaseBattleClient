@@ -30,6 +30,16 @@ function App() {
     });
 
     if (roomFound && usr) {
+      socket.emit("in_room", usr, roomId, (inRoom) => {
+        if (!inRoom) {
+          console.log("joining room");
+          socket.emit("join_room", {
+            username,
+            roomId,
+          });
+        }
+      });
+
       socket.on("update_users", (updatedPlayers) => {
         setPlayers(updatedPlayers);
         console.log("Updated Players: ", updatedPlayers);
