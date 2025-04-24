@@ -1,2 +1,5 @@
-handle duplicate users
-handle host switching
+handle duplicate users 
+
+handle host switching (DONE): (add a bit of delay before switching the host)
+    add context menu for managing players:
+        kick, mute, make host
