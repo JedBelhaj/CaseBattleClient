@@ -1,4 +1,5 @@
 import { RiAccountCircleFill } from "react-icons/ri";
+import { FaCrown } from "react-icons/fa6";
 
 function Player({ player, me }) {
   if (!player) return null;
@@ -14,7 +15,14 @@ function Player({ player, me }) {
     >
       <RiAccountCircleFill className="h-10 w-10 mr-2 text-zinc-700" />
       <div>
-        <p>{player.name + (!player.activity ? " (Disconnected)" : "")}</p>
+        <p className="flex items-center">
+          {player.host && (
+            <p className="mx-1">
+              <FaCrown />
+            </p>
+          )}
+          {player.name + (!player.activity ? " (Disconnected)" : "")}
+        </p>
         <p className="text-sm text-zinc-500">
           opened {player.items.length} case{player.items.length > 1 ? "s" : ""},
           profit: ${0}

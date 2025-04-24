@@ -12,7 +12,9 @@ function App() {
   const [roomFound, setRoomFound] = useState(false);
   const [solo, setSolo] = useState(false);
   const [players, setPlayers] = useState([]);
-  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const [username, setUsername] = useState(
+    localStorage.getItem("username") || ""
+  );
   const { roomId } = useParams();
 
   function ChooseUser() {
@@ -31,12 +33,21 @@ function App() {
         <ButtonPr
           value={"Join Room"}
           action={() => {
-            setUsername(userRef.current.value);
-            localStorage.setItem("username", username);
-            socket.emit("join_room", {
-              username,
-              roomId,
-            });
+            const usernameValue = userRef.current.value;
+
+            if (usernameValue === "") {
+              console.log("this shouldn't happen");
+            } else {
+              setUsername(usernameValue);
+
+              console.log("NEW USERNAME :", usernameValue);
+
+              localStorage.setItem("username", usernameValue);
+              socket.emit("join_room", {
+                username: usernameValue,
+                roomId,
+              });
+            }
           }}
         />
       </div>
@@ -56,7 +67,7 @@ function App() {
       setRoomFound(exists);
     });
 
-    if (roomFound && !!username) {
+    if (roomFound && username) {
       socket.emit("in_room", username, roomId, (inRoom) => {
         if (!inRoom) {
           console.log("joining room");

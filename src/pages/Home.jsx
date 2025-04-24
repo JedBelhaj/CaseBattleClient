@@ -64,7 +64,9 @@ function Home() {
   }, []);
 
   const saveUsername = (usr) => {
-    localStorage.setItem("username", usr);
+    if (usr !== "") {
+      localStorage.setItem("username", usr);
+    }
   };
 
   const createRoom = (e) => {
@@ -156,8 +158,11 @@ function Home() {
               placeholder="ShadawStyleSmpl"
               defaultValue={(() => {
                 const oldUsername = localStorage.getItem("username");
-                localStorage.removeItem("username");
-                return oldUsername;
+                if (oldUsername) {
+                  localStorage.removeItem("username");
+                  return oldUsername;
+                }
+                return "";
               })()}
               type="text"
               maxLength={14}

@@ -1,6 +1,2 @@
-plan: 
-    in the server we'll have
-    users = [
-        [username, socketid]
-        ...
-    ]
+handle duplicate users
+handle host switching
