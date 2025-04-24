@@ -4,8 +4,9 @@ import { getAllRarities, getCrateRarities } from "./utils";
 import RoomSetup from "./RoomSetup";
 import { GoHomeFill } from "react-icons/go";
 import { useNavigate } from "react-router";
+import socket from "../services/socket";
 
-function MainWindow({ gameStarted, solo }) {
+function MainWindow({ gameStarted, solo, roomId }) {
   console.log({ gameStarted, solo });
 
   const navigate = useNavigate();
@@ -72,8 +73,8 @@ function MainWindow({ gameStarted, solo }) {
         <p
           className="text-3xl ml-4 hover:scale-110 transition-transform duration-300 cursor-pointer"
           onClick={() => {
+            socket.emit("leave_room", roomId, localStorage.getItem("username"));
             navigate("/");
-            socket.emit("leave_room");
           }}
         >
           <GoHomeFill />

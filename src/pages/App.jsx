@@ -12,9 +12,36 @@ function App() {
   const [roomFound, setRoomFound] = useState(false);
   const [solo, setSolo] = useState(false);
   const [players, setPlayers] = useState([]);
-  const username = localStorage.getItem("username");
-  const [usr, setUsr] = useState(!!username);
+  const [username, setUsername] = useState(localStorage.getItem("username"));
   const { roomId } = useParams();
+
+  function ChooseUser() {
+    const userRef = useRef(null);
+    return (
+      <div className="h-full w-full flex items-center justify-center flex-col">
+        <p className="text-yellow-500">Choose a Username to enter the room</p>
+        <input
+          placeholder="ShadawStyleSmpl"
+          type="text"
+          maxLength={14}
+          minLength={3}
+          ref={userRef}
+          className="h-10 mx-4 mt-1 rounded-xl bg-zinc-800 border-zinc-700 border-2 text-center text-white focus:border-zinc-700"
+        />
+        <ButtonPr
+          value={"Join Room"}
+          action={() => {
+            setUsername(userRef.current.value);
+            localStorage.setItem("username", username);
+            socket.emit("join_room", {
+              username,
+              roomId,
+            });
+          }}
+        />
+      </div>
+    );
+  }
 
   useEffect(() => {
     if (roomId === "_solo") {
@@ -29,8 +56,8 @@ function App() {
       setRoomFound(exists);
     });
 
-    if (roomFound && usr) {
-      socket.emit("in_room", usr, roomId, (inRoom) => {
+    if (roomFound && !!username) {
+      socket.emit("in_room", username, roomId, (inRoom) => {
         if (!inRoom) {
           console.log("joining room");
           socket.emit("join_room", {
@@ -51,7 +78,7 @@ function App() {
         socket.off("update_users");
       };
     }
-  }, [roomId, roomFound, usr]);
+  }, [roomId, roomFound, username]);
 
   console.log("Players : ", players);
 
@@ -59,43 +86,13 @@ function App() {
     <div className="bg-zinc-900 w-screen h-screen flex">
       {roomFound || solo ? (
         <>
-          {!usr && <Alert content={<ChooseUser />} />}
-          <MainWindow gameStarted={gameStarted} solo={solo} />
+          {!username && <Alert content={<ChooseUser />} />}
+          <MainWindow gameStarted={gameStarted} solo={solo} roomId={roomId} />
           {!solo && <SideBar players={players} />}
         </>
       ) : (
         <RoomNotFound />
       )}
-    </div>
-  );
-}
-
-function ChooseUser() {
-  const userRef = useRef(null);
-
-  return (
-    <div className="h-full w-full flex items-center justify-center flex-col">
-      <p className="text-yellow-500">Choose a Username to enter the room</p>
-      <input
-        placeholder="ShadawStyleSmpl"
-        type="text"
-        maxLength={14}
-        minLength={3}
-        ref={userRef}
-        className="h-10 mx-4 mt-1 rounded-xl bg-zinc-800 border-zinc-700 border-2 text-center text-white focus:border-zinc-700"
-      />
-      <ButtonPr
-        value={"Join Room"}
-        action={() => {
-          const username = userRef.current.value;
-          localStorage.setItem("username", username);
-          setUsr(username);
-          socket.emit("join_room", {
-            username: username,
-            roomId: roomId,
-          });
-        }}
-      />
     </div>
   );
 }

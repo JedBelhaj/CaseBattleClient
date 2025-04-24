@@ -154,7 +154,11 @@ function Home() {
             <p className="">Username:</p>
             <input
               placeholder="ShadawStyleSmpl"
-              defaultValue={localStorage.getItem("username")}
+              defaultValue={(() => {
+                const oldUsername = localStorage.getItem("username");
+                localStorage.removeItem("username");
+                return oldUsername;
+              })()}
               type="text"
               maxLength={14}
               ref={usernameRef}
