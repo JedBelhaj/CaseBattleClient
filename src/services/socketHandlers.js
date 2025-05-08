@@ -1,14 +1,18 @@
 import socket from "./socket";
 
 const socketHandler = {
-  handleJoinRoom: (username, roomId) => {
-    let returnUsername = "";
+  joinRoom: (username, roomId) => {
+    console.log(username, "joining ", roomId);
+
     if (username !== "") {
       socket.emit("join_room", username, roomId, (newUsername) => {
-        returnUsername = newUsername;
+        if (newUsername) {
+          console.log("NEW USERNAME :", newUsername);
+
+          localStorage.setItem("username", newUsername);
+        }
       });
     }
-    return returnUsername;
   },
   createRoom: (username) => {},
 };

@@ -15,14 +15,14 @@ function Player({ player, me }) {
     >
       <RiAccountCircleFill className="h-10 w-10 mr-2 text-zinc-700" />
       <div>
-        <p className="flex items-center">
+        <div className="flex items-center">
           {player.host && (
             <p className="mx-1">
               <FaCrown />
             </p>
           )}
           {player.name + (!player.activity ? " (Disconnected)" : "")}
-        </p>
+        </div>
         <p className="text-sm text-zinc-500">
           opened {player.items.length} case{player.items.length > 1 ? "s" : ""},
           profit: ${0}
