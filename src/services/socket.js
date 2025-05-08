@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
 
-const socket = io(import.meta.env.BACKEND || "http://localhost:3001");
+const backendURL = import.meta.env.BACKEND;
+const socket = io(backendURL);
 
 export default socket;
