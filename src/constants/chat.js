@@ -14,7 +14,7 @@ export const CHAT_MESSAGES = {
 };
 
 export const CHAT_STYLES = {
-  EXPANDED_HEIGHT: "flex-1",
-  COLLAPSED_HEIGHT: "flex-grow-0 h-0",
+  EXPANDED_HEIGHT: "flex-1 min-h-0",
+  COLLAPSED_HEIGHT: "h-0 overflow-hidden",
   TRANSITION_DURATION: "duration-200",
 };

@@ -36,8 +36,8 @@ function Players({ players }) {
   return (
     <div
       className={`${
-        expand ? "flex-1 h-1/2" : "h-fit"
-      } flex flex-col transition-all`}
+        expand ? "flex-1" : "flex-shrink-0"
+      } flex flex-col transition-all duration-200`}
     >
       <p className="text-yellow-500 font-oxanium bg-black p-4 flex justify-between items-center">
         Players
@@ -52,9 +52,9 @@ function Players({ players }) {
       </p>
 
       <div
-        className={`overflow-auto ${
-          expand ? "flex-1 h-fit" : "flex-grow-0 h-0"
-        } `}
+        className={`transition-all duration-200 ${
+          expand ? "flex-1 overflow-auto" : "h-0 overflow-hidden"
+        }`}
       >
         {sortedPlayers.map((p, index) => (
           <Player me={index == 0} player={p} key={index} />

@@ -24,9 +24,9 @@ function Chat() {
   };
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col min-h-0">
       {/* Fixed Header */}
-      <header className="text-yellow-500 font-oxanium bg-black p-4 flex justify-between items-center">
+      <header className="text-yellow-500 font-oxanium bg-black p-4 flex justify-between items-center flex-shrink-0">
         <h3>{CHAT_MESSAGES.HEADER_TITLE}</h3>
         <button
           onClick={toggleExpanded}
@@ -41,25 +41,29 @@ function Chat() {
 
       {/* Scrollable Messages Container */}
       <div
-        className={`overflow-hidden transition-all ${CHAT_STYLES.TRANSITION_DURATION} ${
+        className={`flex flex-col transition-all ${CHAT_STYLES.TRANSITION_DURATION} ${
           isExpanded ? CHAT_STYLES.EXPANDED_HEIGHT : CHAT_STYLES.COLLAPSED_HEIGHT
         }`}
       >
-        <div className="flex-1 overflow-auto h-full">
-          <Messages 
-            messages={messages} 
-            formatTime={formatMessageTime}
-          />
-        </div>
-
-        {/* Fixed Input Field */}
         {isExpanded && (
-          <MessageInput
-            value={currentMessage}
-            onChange={setCurrentMessage}
-            onSend={handleSendMessage}
-            placeholder={CHAT_MESSAGES.PLACEHOLDER}
-          />
+          <>
+            <div className="flex-1 overflow-auto min-h-0">
+              <Messages 
+                messages={messages} 
+                formatTime={formatMessageTime}
+              />
+            </div>
+
+            {/* Fixed Input Field */}
+            <div className="flex-shrink-0">
+              <MessageInput
+                value={currentMessage}
+                onChange={setCurrentMessage}
+                onSend={handleSendMessage}
+                placeholder={CHAT_MESSAGES.PLACEHOLDER}
+              />
+            </div>
+          </>
         )}
       </div>
     </div>
