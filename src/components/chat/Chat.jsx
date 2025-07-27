@@ -1,48 +1,66 @@
 import { IoIosArrowDown } from "react-icons/io";
-import { IoSend } from "react-icons/io5";
 import Messages from "./Messages";
-import { useState } from "react";
+import MessageInput from "./MessageInput";
+import { useChat } from "@/hooks/useChat";
+import { CHAT_MESSAGES, CHAT_STYLES } from "@/constants/chat";
 
 function Chat() {
-  const [expand, setExpand] = useState(true);
-  const messages = [...Array(1)].map((_, index) => ({
-    user: `player_${index}`,
-    content: "hello 👋",
-    date: "11:00PM",
-  }));
+  const {
+    messages,
+    currentMessage,
+    setCurrentMessage,
+    isExpanded,
+    sendMessage,
+    toggleExpanded,
+    formatMessageTime,
+  } = useChat();
+
+  const handleSendMessage = () => {
+    const result = sendMessage();
+    if (!result.success) {
+      // TODO: Show error message (toast notification)
+      console.warn(result.error);
+    }
+  };
 
   return (
     <div className="flex-1 flex flex-col">
       {/* Fixed Header */}
-      <p className="text-yellow-500 font-oxanium bg-black p-4 flex justify-between items-center">
-        Chat
-        <IoIosArrowDown
-          onClick={() => {
-            setExpand(!expand);
-          }}
-          className={`hover:scale-125 transition-transform duration-200 cursor-pointer text-lg ${
-            expand ? "-rotate-180" : ""
+      <header className="text-yellow-500 font-oxanium bg-black p-4 flex justify-between items-center">
+        <h3>{CHAT_MESSAGES.HEADER_TITLE}</h3>
+        <button
+          onClick={toggleExpanded}
+          className={`hover:scale-125 transition-transform ${CHAT_STYLES.TRANSITION_DURATION} cursor-pointer text-lg ${
+            isExpanded ? "-rotate-180" : ""
           }`}
-        />
-      </p>
+          aria-label={isExpanded ? "Collapse chat" : "Expand chat"}
+        >
+          <IoIosArrowDown />
+        </button>
+      </header>
 
       {/* Scrollable Messages Container */}
       <div
-        className={`overflow-hidden  ${expand ? "flex-1" : "flex-grow-0 h-0"} `}
+        className={`overflow-hidden transition-all ${CHAT_STYLES.TRANSITION_DURATION} ${
+          isExpanded ? CHAT_STYLES.EXPANDED_HEIGHT : CHAT_STYLES.COLLAPSED_HEIGHT
+        }`}
       >
         <div className="flex-1 overflow-auto h-full">
-          <Messages messages={messages} />
+          <Messages 
+            messages={messages} 
+            formatTime={formatMessageTime}
+          />
         </div>
 
         {/* Fixed Input Field */}
-        <div className="flex items-center gap-2 bg-zinc-600 p-2">
-          <input
-            type="text"
-            className="w-full h-8 text-white appearance-none border-none outline-none bg-transparent"
-            placeholder="Send a message!"
+        {isExpanded && (
+          <MessageInput
+            value={currentMessage}
+            onChange={setCurrentMessage}
+            onSend={handleSendMessage}
+            placeholder={CHAT_MESSAGES.PLACEHOLDER}
           />
-          <IoSend className="text-zinc-400 text-2xl cursor-pointer" />
-        </div>
+        )}
       </div>
     </div>
   );
