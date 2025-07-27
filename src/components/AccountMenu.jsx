@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import ButtonPr from "./ButtonPr";
+import { ButtonPr } from "@/components/ui";
 
 function AccountMenu({ isVisible, onClose }) {
 

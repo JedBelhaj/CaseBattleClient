@@ -5,7 +5,7 @@ import {
   cs2RarityColors,
   getCrateRarities,
   selectRare,
-} from "./utils";
+} from "@/utils";
 import UnboxedItem from "./UnboxedItem";
 import ItemsOpened from "./ItemsOpened";
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import Item from "./Item";
-import { getItemsRarities } from "./utils";
+import { getItemsRarities } from "@/utils";
 function ItemsOpened({ items }) {
   // const [sort, setSort] = useState("new");
   // const [search, setSearch] = useState("");

@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { RiAccountCircleFill } from "react-icons/ri";
-import RainDropEffect from "@/components/RainDropEffect";
-import ButtonPr from "@/components/ButtonPr";
+import { RainDropEffect } from "@/components/effects";
+import { ButtonPr } from "@/components/ui";
 import AccountMenu from "@/components/AccountMenu";
 import { useSkins } from "@/hooks/useSkins";
 

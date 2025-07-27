@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Chat from "./Chat";
+import { Chat } from "@/components/chat";
 import Players from "./Players";
 
 function SideBar({ players }) {

@@ -1,6 +1,6 @@
-import Star from "./star.svg?react";
+import Star from "@/assets/star.svg?react";
 import { ImCross } from "react-icons/im";
-import { addHexColor } from "./utils";
+import { addHexColor } from "@/utils";
 import { useState } from "react";
 function UnboxedItem({ item, unbox, solo }) {
   /*

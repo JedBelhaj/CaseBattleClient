@@ -1,4 +1,4 @@
-import ButtonPr from "./ButtonPr";
+import { ButtonPr } from "@/components/ui";
 function RoomSetup() {
   return (
     <div className="flex items-center justify-center h-full text-white">

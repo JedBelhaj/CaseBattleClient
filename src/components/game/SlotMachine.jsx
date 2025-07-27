@@ -1,6 +1,9 @@
-function SlotMachine(alts, rareOpen) {
-  const [alts, setAlts] = useState([]);
-  const [rareOpen, setRareOpen] = useState(false);
+import { useState } from "react";
+
+function SlotMachine({ initialAlts = [], initialRareOpen = false }) {
+  const [alts, setAlts] = useState(initialAlts);
+  const [rareOpen, setRareOpen] = useState(initialRareOpen);
+  const [open, setOpen] = useState(false);
   const [translate, setTranslate] = useState(
     " translate-x-[380rem] duration-[0] "
   );

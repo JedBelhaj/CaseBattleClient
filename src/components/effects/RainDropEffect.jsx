@@ -1,5 +1,5 @@
 import { memo } from "react";
-import RainDropSkin from "../components/RainDropSkin";
+import RainDropSkin from "./RainDropSkin";
 
 // using memo because this component should not rerender ever to maintain smooth animation without choppiness everytime a user presses a button
 const RainDropEffect = memo(({ skins, skinCount }) => {

@@ -1,10 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
-import Case from "./Case";
-import { getAllRarities, getCrateRarities } from "./utils";
-import RoomSetup from "./RoomSetup";
+import { Case } from "@/components/game";
+import { getAllRarities, getCrateRarities } from "@/utils";
+import { RoomSetup } from "@/components/room";
 import { GoHomeFill } from "react-icons/go";
-import { useNavigate } from "react-router";
-import socket from "../services/socket";
+import { useNavigate } from "react-router-dom";
+import socket from "@/services/socket";
 
 function MainWindow({ gameStarted, solo, roomId }) {
   console.log({ gameStarted, solo });

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import Star from "../components/star.svg?react";
+import Star from "@/assets/star.svg?react";
 
 function RainDropSkin({ Duration, Index, Delay, Skin }) {
   const [pos, setPos] = useState(getRandomPosition());
