@@ -7,7 +7,10 @@ import AccountMenu from "@/components/AccountMenu";
 import { useSkins } from "@/hooks/useSkins";
 
 function Home() {
-  const skins = useSkins();
+  const { skins, loading: skinsLoading } = useSkins({
+    preloadImages: true,
+    priorityPreload: true
+  });
   const [warning, setWarning] = useState("");
   const [showAccount, setShowAccount] = useState(false);
 

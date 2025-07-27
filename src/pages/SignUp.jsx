@@ -9,11 +9,15 @@ import { SIGNUP_CONSTANTS, SIGNUP_MESSAGES } from "@/constants/signup";
 
 function SignUp() {
   const navigate = useNavigate();
-  const skins = useSkins();
+  const { skins, loading: skinsLoading, error: skinsError, preloadProgress } = useSkins({
+    preloadImages: true,
+    priorityPreload: true,
+    filterCriteria: { hasImage: true } // Only show skins with images for effects
+  });
   const { updateUsername } = useUsername();
   const { formData, errors, isLoading, setIsLoading, updateField, validateForm, resetForm } = useSignUpForm();
 
-  const skinCount = 200;
+  const skinCount = skinsLoading ? 50 : 150; // Reduce count while loading for better performance
 
   const handleSubmit = async (e) => {
     e.preventDefault();
