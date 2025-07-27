@@ -7,7 +7,7 @@ import socket from "../services/socket";
 import Alert from "../components/Alert";
 import ButtonPr from "../components/ButtonPr";
 
-function App() {
+function Room() {
   const [gameStarted, setGameStarted] = useState(true);
   const [roomFound, setRoomFound] = useState(false);
   const [solo, setSolo] = useState(false);
@@ -108,4 +108,4 @@ function App() {
   );
 }
 
-export default App;
+export default Room;
