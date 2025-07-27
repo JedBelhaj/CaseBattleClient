@@ -238,7 +238,21 @@ export function getCrateRarities(crate) {
 }
 
 export function getItemsRarities(items) {
-  const rarities = items.map((x) => x.rarity.color).filter(unique);
+  if (!items || items.length === 0) return [];
+  
+  const rarities = items
+    .map((item) => {
+      // Handle both direct items and opened case items
+      if (item.skin && item.skin.rarity && item.skin.rarity.color) {
+        return item.skin.rarity.color;
+      } else if (item.rarity && item.rarity.color) {
+        return item.rarity.color;
+      }
+      return null;
+    })
+    .filter((rarity) => rarity !== null)
+    .filter(unique);
+    
   return rarities.reverse();
 }
 
